@@ -48,14 +48,14 @@ def create_nodes(dbc,db,names,surname,begining_id,clean):
         session.run("MATCH (n) DETACH DELETE n")
     for i,name in zip(range(begining_id,10+begining_id),names):
         value=['%C'+str(i)]
-        cursor.execute("select deviceID from devices where deviceID like (%s)",value)
+        cursor.execute("select productID from products where productID like (%s)",value)
         results=[item for result in list(cursor.fetchall()) for item in result]
         full_name=name+'_'+surname
         command="CREATE("+full_name+":Person "
         command+="{full_name: '"+full_name+"', name: '"+name
         string_results="','".join(results)
         string_results="'"+string_results+"'"
-        command+="' ,surname: '"+surname+"' , devices: ["+string_results+"]})"
+        command+="' ,surname: '"+surname+"' , products: ["+string_results+"]})"
         session.run(command)
     session.close()
     cursor.close()
@@ -64,7 +64,6 @@ def create_nodes(dbc,db,names,surname,begining_id,clean):
         if pair[0]==pair[1]:
             continue
         make_friendship(pair[0],pair[1],dbc)
-        make_friendship(pair[1],pair[0],dbc)
 
 def make_friendship(A,B,dbc):
     session = dbc.session()

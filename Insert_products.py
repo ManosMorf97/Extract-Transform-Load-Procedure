@@ -16,14 +16,11 @@ def Begin():
 def prepare_mysql_data(db):
     try:
         cursor=db.cursor()
-        #cursor.execute('SET GLOBAL connect_timeout=28800')
-        #cursor.execute('SET GLOBAL interactive_timeout=28800')
-        #cursor.execute('SET GLOBAL wait_timeout=28800')
-        sql_statement=("CREATE TABLE IF NOT EXISTS devices ("
-            "deviceID varchar(30) not null,"
-            "type_device varchar(20) not null,"
+        sql_statement=("CREATE TABLE IF NOT EXISTS products("
+            "productID varchar(30) not null,"
+            "type_product varchar(20) not null,"
             "brand_company varchar(20) not null,"
-            "primary key(deviceID)"
+            "primary key(productID)"
             ")ENGINE=InnoDB")
         cursor.execute(sql_statement)
         db.commit()
@@ -33,7 +30,7 @@ def prepare_mysql_data(db):
         for type in types:
             for i in range(1,20+1):
                 values=(type+'_C'+str(i),type,brand)
-                sql_statement="Insert into devices values(%s,%s,%s)"
+                sql_statement="Insert into products values(%s,%s,%s)"
                 cursor.execute(sql_statement,values)
                 db.commit() 
         print("Done")
