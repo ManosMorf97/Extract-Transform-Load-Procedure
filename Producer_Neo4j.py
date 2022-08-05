@@ -26,6 +26,7 @@ for result in json_results:
     kafka_producer.send("users-topic",result)
     time.sleep(4)
 print(time.time()-seconds)
+print("Done")
 
 
 

@@ -1,37 +1,32 @@
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 import json
-import pymongo
-import secretP
-from secretP import *
-
-def get_database():
-    from pymongo import MongoClient
-    import pymongo
-
-    # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    CONNECTION_STRING = "mongodb+srv://Manos97:"
-    CONNECTION_STRING+=mongodb_pwd
-    CONNECTION_STRING+="@clusterm1997.zpbgesp.mongodb.net/?retryWrites=true&w=majority"
-
-    # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-    from pymongo import MongoClient
-    client = MongoClient(CONNECTION_STRING)
-
-    # Create the database for our example (we will use the same database throughout the tutorial
-    return client['UsersAndProducts']
-    
-# This is added so that many files can reuse the function get_database()
-if __name__ == "__main__":    
-    
-    # Get the database
-    dbname = get_database()
-
-print("Mongo Done")
+from connection_to_mongodb import *
 
 
 def decoder(m):
     return json.loads(m.decode('ascii'))
+
+def binarySearch(arr, x):
+    l = 0
+    r = len(arr)
+    while (l <= r):
+        m = l + ((r - l) // 2)
+ 
+        if x == arr[m]['productID']:
+            return m
+        # If x greater, ignore left half
+        elif x>arr[m]['productID']:
+            l = m + 1
+ 
+        # If x is smaller, ignore right half
+        else:
+            r = m - 1
+ 
+    return -1
+
+db=get_database()
+collection =db['Users_Products']
 
 consumerSQL=KafkaConsumer(
     'products-topic',
@@ -40,8 +35,7 @@ consumerSQL=KafkaConsumer(
     value_deserializer=decoder,
     consumer_timeout_ms=3000
 )
-for message in consumerSQL:
-    print(message.value)
+products=[message.value for message in consumerSQL]
 
 consumerNeo4j=KafkaConsumer(
     'users-topic',
@@ -51,8 +45,21 @@ consumerNeo4j=KafkaConsumer(
     consumer_timeout_ms=3000
 )
 
-for message in consumerNeo4j:
-    print(message.value)
+people=[message.value for message in consumerNeo4j]
+   
+products=sorted(products, key=lambda p: p['productID'])
 
+for person in people:
+    dict_of_products=None
+    dict_of_products=[]
+    for productID in person['products']:
+        index=binarySearch(products,productID)
+        dict_of_products.append(products[index])
+    person['products']=[]
+    person['products']=dict_of_products
+    with open(person['full_name']+".json", "w") as outfile:
+        json.dump(person,outfile)
+    collection.insert_one(person)
+print("DONE")
 
 
