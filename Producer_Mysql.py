@@ -42,6 +42,6 @@ def send_data(json_results,b_size):
     #400
     for result in json_results:
         kafka_producer.send("products-topic",result)
-        #time.sleep(2)
+        time.sleep(2)
 
 Begin()
