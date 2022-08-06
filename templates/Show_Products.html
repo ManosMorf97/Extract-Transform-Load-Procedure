@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}">
+		<title>Show Products</title>
+	</head>
+	<body>
+		{% if products|length >= 1 %}
+			<table id="center2">
+				<tr>
+				<th>ProductID</th>
+				<th>type_product</th>
+				<th>brand_company</th>
+				</tr>
+				{% for product in products %}
+					<tr>
+						<td>{{product.productID}}</td>
+						<td>{{product.type_product}}</td>
+						<td>{{product.brand_company}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<h1>This user does not exist</h1>
+		{% endif %}
+		<form method="Post">
+			<input id="back" class="beautiful_button" value="Back" type="submit">
+		</form>
+	</body>
+</html>
+

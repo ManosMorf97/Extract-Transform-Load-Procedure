@@ -1,0 +1,64 @@
+ #center1{
+ 	position: absolute;
+    left: 50%;
+    width: 90%;
+ }
+ #center2{
+	position: absolute;
+	right: 50%;
+ }
+ body{
+ 	background-color: #ABC1C9;
+   overflow-anchor: none;
+ }
+ #search{
+ 	margin-right:2%;
+ 	height: 5vh;
+ }
+ input{
+ 	height:  5vh;
+ 	
+ }
+ #interests{
+ 	width: 100%;
+ 	height: 5vh;
+ }
+ .helpful{
+ width: 100%;
+ height: 2vh;
+ }
+ .beautiful_button{
+ 	background-color: #fdfd96;
+ 	font-size: 100%;
+ }
+ .first-divs{
+ 	width: 20%;
+ 	height: 20%;
+ }
+.movies{
+  background-color:#ff6961;
+  border-style: double;
+}
+button{
+   overflow: hidden;
+}
+
+table, th, td {
+	border: 1px solid;
+	border-color:black;
+}
+
+th{
+	background-color:#FAC898 ;
+
+}
+
+td{
+	background-color:#94fa92 ;
+}
+table{
+	background-color:black;
+}
+
+
+
