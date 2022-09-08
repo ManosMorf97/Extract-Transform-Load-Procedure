@@ -11,7 +11,8 @@ def getUserProducts(full_name):
         collection=db['Users_Products']
         person=list(collection.find({'full_name':full_name}))[0]
         return person["products"]
-    except:
+    except Exception as ex:
+        print(ex)
         return []
 
 @app.route('/', methods=['POST', 'GET'])

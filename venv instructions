@@ -1,0 +1,4 @@
+cd Μεταπτυχιακό/"1o Εξάμηνο"/"Προγραμματισμός Πλήρους Στοίβας στον Παγκόσμιο Ιστό"/"Extract Transform Load procedure"
+cd  venv
+virtualenv venv
+source venv/bin/activate

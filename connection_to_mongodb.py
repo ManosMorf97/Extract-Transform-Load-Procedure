@@ -2,6 +2,7 @@ import secretP
 from secretP import *
 
 def get_database():
+    #?retryWrites=true&w=majority"
     from pymongo import MongoClient
 
     # Provide the mongodb atlas url to connect python to mongodb using pymongo

@@ -1,0 +1,4 @@
+stop your working port
+
+
+sudo fuser -k 5000/tcp
