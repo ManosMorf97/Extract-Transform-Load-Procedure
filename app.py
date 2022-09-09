@@ -3,11 +3,11 @@ from connection_to_mongodb import *
 
 app = Flask(__name__)
 full_name=""
-db=get_database()
-collection=db['Users_Products']
 
 def getUsers():
     try:
+        db=get_database()
+        collection=db['Users_Products']
         people=collection.find()
         return list(people)
     except Exception as ex:
@@ -16,6 +16,8 @@ def getUsers():
 
 def getUserProducts(full_name):
     try:
+        db=get_database()
+        collection=db['Users_Products']
         person=list(collection.find({'full_name':full_name}))[0]
         return person["products"]
     except Exception as ex:
