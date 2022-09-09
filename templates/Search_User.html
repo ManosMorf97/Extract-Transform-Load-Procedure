@@ -11,6 +11,22 @@
 				<input id="search_person" type="text" placeholder="Search..." name="search">
 				<input id="search" class="beautiful_button" value="Search" type="submit">
 			</form>
+			{% if users|length >= 1 %}
+				<h3>List User</h3>
+				<table>
+					<tr>
+						<th>full_name</th>
+					</tr>
+					{% for user in users %}
+						<tr>
+							<td>{{user.full_name}}</td>
+						</tr>
+					{% endfor %}
+				</table>
+				<br>
+			{% else %}
+				<h1>There is no user yet to see info</h1>
+			{% endif %}
 		</div>
 	</body>
 </html>

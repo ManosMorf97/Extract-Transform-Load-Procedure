@@ -3,12 +3,19 @@ from connection_to_mongodb import *
 
 app = Flask(__name__)
 full_name=""
+db=get_database()
+collection=db['Users_Products']
 
+def getUsers():
+    try:
+        people=collection.find()
+        return list(people)
+    except Exception as ex:
+        print(ex)
+        return []
 
 def getUserProducts(full_name):
     try:
-        db=get_database()
-        collection=db['Users_Products']
         person=list(collection.find({'full_name':full_name}))[0]
         return person["products"]
     except Exception as ex:
@@ -18,7 +25,8 @@ def getUserProducts(full_name):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method=='GET':
-        return render_template('Search_User.html')
+        users=getUsers()
+        return render_template('Search_User.html',users=users)
     else:
         full_name=request.form['search']
         return redirect(url_for('products',full_name=full_name))
