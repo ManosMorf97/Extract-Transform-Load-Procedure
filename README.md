@@ -1,4 +1,4 @@
-# Extract Transform Load procedure
+# Extract Transform Load Procedure
 
  ### At this project there are 5 steps: 
  1) Creation of fake data about devices and insertion in a mysql db.
